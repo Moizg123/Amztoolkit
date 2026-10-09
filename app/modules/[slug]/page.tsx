@@ -86,13 +86,30 @@ export default async function ModulePage({ params }: { params: Promise<{ slug: s
         </Reveal>
       </div>
 
+      {m.number > 0 && (
+        <Link
+          href={`/my-market/${m.slug}`}
+          className="group flex flex-col gap-3 rounded-3xl bg-navy p-8 text-primary-foreground md:flex-row md:items-center md:justify-between"
+        >
+          <span className="flex flex-col gap-1">
+            <span className="text-sm font-semibold uppercase tracking-wider text-bayer-blue">After the topics</span>
+            <span className="text-pretty leading-relaxed text-primary-foreground/80">
+              Score your market against best in class for this lever.
+            </span>
+          </span>
+          <span className="font-display text-2xl font-bold transition-transform group-hover:translate-x-1 md:text-3xl">
+            Assess your market →
+          </span>
+        </Link>
+      )}
+
       {next && (
         <Link
           href={`/modules/${next.slug}`}
-          className="group flex flex-col gap-2 rounded-3xl border p-8 transition-colors hover:bg-mist md:flex-row md:items-center md:justify-between"
+          className="group flex items-center justify-between gap-4 rounded-3xl border px-8 py-5 transition-colors hover:bg-mist"
         >
           <span className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Next module</span>
-          <span className="font-display text-2xl font-bold transition-transform group-hover:translate-x-1 md:text-3xl">
+          <span className="font-semibold transition-transform group-hover:translate-x-1">
             {next.number} · {next.title} →
           </span>
         </Link>

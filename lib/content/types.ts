@@ -19,7 +19,6 @@ export type InteractiveKey =
   | "quality-score"
   | "pdp-scorer"
   | "title-builder"
-  | "issue-sort"
   | "sov-gap"
   | "bid-calculator"
   | "event-strategy"
