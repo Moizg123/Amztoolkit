@@ -36,8 +36,6 @@ export function Interactive({ id }: { id: InteractiveKey }) {
       return <PdpScorer />
     case "title-builder":
       return <TitleBuilder />
-    case "issue-sort":
-      return <IssueSort />
     case "sov-gap":
       return <SovGap />
     case "bid-calculator":
@@ -401,80 +399,6 @@ function Meter({ label, value, target, good, note }: { label: string; value: num
         <span className="text-primary-foreground/50"> / {target}</span>
       </span>
       <span className="text-xs text-primary-foreground/70">{note}</span>
-    </div>
-  )
-}
-
-const FIXES = [
-  "Rebuild with 10+ category keywords",
-  "Switch to text-based A+ content",
-  "Push review velocity",
-  "Add photos and video",
-  "Set a refresh cadence",
-] as const
-
-const ISSUES: { issue: string; fix: number; why: string }[] = [
-  { issue: "The title is 38 characters long and contains two keywords.", fix: 0, why: "The standard is strong SEO words from the keyword database, at least 10, within 75 characters." },
-  { issue: "All the A+ copy sits inside designed images.", fix: 1, why: "Text-based A+ formatting improves LLM crawlability, a PDP quick win." },
-  { issue: "The hero ASIN averages 3.7 stars from 90 reviews.", fix: 2, why: "Below both benchmarks (rating above 4, 500+ reviews). Review velocity is a quick win." },
-  { issue: "The page shows three photos and no video.", fix: 3, why: "Amazon standard: more than 5 photos, plus video or 360-degree animation." },
-  { issue: "Nobody has touched the page since launch two years ago.", fix: 4, why: "Best in class teams run a regular PDP audit and refresh cadence." },
-]
-
-function IssueSort() {
-  const [picks, setPicks] = useState<Record<number, number>>({})
-  const done = Object.keys(picks).length
-  const right = ISSUES.filter((x, i) => picks[i] === x.fix).length
-  return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <p className="text-sm font-semibold text-muted-foreground" aria-live="polite">
-          {done === 0 ? `${ISSUES.length} issues` : `${right} of ${done} matched correctly`}
-        </p>
-        {done > 0 && (
-          <button type="button" onClick={() => setPicks({})} className="flex items-center gap-1.5 text-sm font-semibold hover:underline">
-            <RotateCcw className="size-4" /> Reset
-          </button>
-        )}
-      </div>
-      {ISSUES.map((x, i) => {
-        const p = picks[i]
-        const answered = p !== undefined
-        return (
-          <div key={x.issue} className="flex flex-col gap-4 rounded-3xl border p-6">
-            <p className="text-pretty text-lg font-semibold leading-snug">{x.issue}</p>
-            <div className="flex flex-wrap gap-2">
-              {FIXES.map((label, n) => {
-                const isPick = p === n
-                const isRight = n === x.fix
-                return (
-                  <button
-                    key={label}
-                    type="button"
-                    aria-pressed={isPick}
-                    onClick={() => setPicks({ ...picks, [i]: n })}
-                    className={cn(
-                      "rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
-                      !answered && "hover:border-navy hover:bg-mist",
-                      answered && isRight && "border-bayer-green bg-bayer-green/25",
-                      answered && isPick && !isRight && "border-destructive/40 bg-destructive/5 line-through",
-                      answered && !isPick && !isRight && "opacity-50",
-                    )}
-                  >
-                    {label}
-                  </button>
-                )
-              })}
-            </div>
-            {answered && (
-              <p className="text-pretty text-sm leading-relaxed">
-                <span className="font-bold">{p === x.fix ? "Correct. " : "Not quite. "}</span>
-                {x.why}
-              </p>
-            )}
-          </div>
-        )
-      })}
     </div>
   )
 }

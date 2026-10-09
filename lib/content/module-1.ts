@@ -284,23 +284,4 @@ export const pdpLessons: Lesson[] = [
       },
     ],
   },
-  {
-    slug: "practise",
-    title: "Practise: fix the page",
-    summary: "Match PDP issues to fixes, then make three calls.",
-    minutes: 5,
-    source: { core: [6, 8, 10, 11] },
-    steps: [
-      {
-        title: "Match the issue to the fix",
-        blocks: [
-          {
-            type: "text",
-            text: "Each card describes a problem found on a PDP. Choose the fix the toolkit points to.",
-          },
-          { type: "interactive", key: "issue-sort" },
-        ],
-      },
-    ],
-  },
 ]
